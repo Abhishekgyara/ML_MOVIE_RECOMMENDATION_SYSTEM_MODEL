@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Movie Recommendation System</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#1c1c1c;
+color:white;
+text-align:center;
+}
+
+.container{
+width:600px;
+margin:auto;
+margin-top:40px;
+}
+
+select,button{
+padding:10px;
+margin:10px;
+}
+
+.card{
+background:#333;
+padding:15px;
+margin:10px;
+border-radius:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Movie Recommendation System</h1>
+
+<form action="/recommend" method="post">
+
+<select name="movie">
+
+{% for m in movies %}
+
+<option value="{{m}}">{{m}}</option>
+
+{% endfor %}
+
+</select>
+
+<br>
+
+<button type="submit">Recommend Movies</button>
+
+</form>
+
+{% if recommendations %}
+
+<h2>Recommended Movies</h2>
+
+{% for r in recommendations %}
+
+<div class="card">
+
+{{r}}
+
+</div>
+
+{% endfor %}
+
+<canvas id="chart"></canvas>
+
+<script>
+
+const ctx = document.getElementById('chart');
+
+new Chart(ctx,{
+type:'bar',
+data:{
+labels:[
+{% for r in recommendations %}
+"{{r}}",
+{% endfor %}
+],
+datasets:[{
+label:'Recommendation Rank',
+data:[5,4,3,2,1]
+}]
+}
+})
+
+</script>
+
+{% endif %}
+
+</div>
+
+</body>
+
+</html>
